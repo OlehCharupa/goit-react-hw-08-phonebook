@@ -1,7 +1,9 @@
 import axios from "axios";
+import { useSelector } from "react-redux";
 import { setError, resetError } from "../action/errorAction";
 import { loaderOn, loaderOff } from "../action/loaderAction";
 import { setContactLocalStorage, deleteContact, setContacts } from "../action/phoneBookAction";
+
 
 const options = {
     header: {
@@ -9,10 +11,17 @@ const options = {
     }
 }
 
-export const getContactsOperation = () => async (dispatch) => {
+export const getContactsOperation = (token) => async (dispatch) => {
     try {
         dispatch(loaderOn())
-        const result = await axios.get('http://localhost:5000/contacts')
+        const result = await axios({
+            url: 'https://goit-phonebook-api.herokuapp.com/contacts',
+            method: "get",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        })
+        // console.log(result.data);
         dispatch(setContacts(result.data))
     } catch (error) {
         dispatch(setError("Что-то пошло не так. Попробуйте позже!"))
@@ -21,10 +30,19 @@ export const getContactsOperation = () => async (dispatch) => {
     }
 }
 
-export const postContactsOperation = (contact) => async (dispatch) => {
+export const postContactsOperation = (contact, token) => async (dispatch) => {
     try {
         dispatch(loaderOn())
-        await axios.post('http://localhost:5000/contacts', contact, options)
+        const result = await axios({
+            url: 'https://goit-phonebook-api.herokuapp.com/contacts',
+            method: "post",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            body: { ...contact },
+        })
+        // dispatch(setContacts(result.data))
+        dispatch(getContactsOperation(token))
     } catch (error) {
         dispatch(setError("Что-то пошло не так. Попробуйте позже!"))
     } finally {
@@ -32,10 +50,17 @@ export const postContactsOperation = (contact) => async (dispatch) => {
     }
 }
 
-export const deleteContactOperation = (id) => async (dispatch) => {
+export const deleteContactOperation = (id, token) => async (dispatch) => {
     try {
-        await axios.delete(`http://localhost:5000/contacts/${id}`)
+        await axios({
+            url: `https://goit-phonebook-api.herokuapp.com/contacts/${id}`,
+            method: "delete",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
         dispatch(deleteContact(id))
+        dispatch(getContactsOperation(token))
     } catch (error) {
         dispatch(setError("Что-то пошло не так. Попробуйте позже!"))
     } finally {

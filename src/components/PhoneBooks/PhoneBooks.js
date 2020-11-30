@@ -14,11 +14,12 @@ const PhoneBooks = () => {
     const contacts = useSelector(state => state.contacts.items)
     const filter = useSelector(state => state.contacts.filter)
     const alert = useSelector(state => state.contacts.isAlert)
+    const token = useSelector(state => state.token)
     const dispatch = useDispatch()
 
 
     useEffect(() => {
-        dispatch(getContactsOperation())
+        dispatch(getContactsOperation(token))
         const localStorageContacts = localStorage.getItem("items")
         const fff = JSON.parse(localStorageContacts)
         if (localStorageContacts) {

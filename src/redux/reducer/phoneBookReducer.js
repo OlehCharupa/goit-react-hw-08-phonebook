@@ -6,7 +6,7 @@ const initialState = []
 export const contacts = (state = initialState, action) => {
     switch (action.type) {
         case ADD_CONTACT:
-            return [...state, { ...action.payload, id: uuidv4() }]
+            return [...state, { ...action.payload }]
         case DELETE_CONTACT:
             return state.filter(contact => contact.id !== action.payload)
         case SET_LOCAL_STORAGE:

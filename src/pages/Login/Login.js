@@ -23,14 +23,13 @@ const Login = () => {
 
     return (
         <div>
-            <h1>Login</h1>
+            <h1>Авторизация</h1>
             <form onSubmit={submit}>
                 <input onChange={inputHeanler} value={form.email} type='email' name='email' placeholder="email" />
                 <input onChange={inputHeanler} value={form.password} type='password' name='password' placeholder="password" />
-                <button type='submit'>Login</button>
+                <button type='submit'>Авторизация</button>
             </form>
-            <p>If You already have an accout please <NavLink to={navigation.registration}>Sing UP</NavLink></p>
-
+            <p>Если у Вас нету аккаунта, пройдите по ссылке для <NavLink to={navigation.registration}>регистрации</NavLink>.</p>
         </div>
     );
 };

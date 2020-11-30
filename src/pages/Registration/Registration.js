@@ -22,14 +22,14 @@ const Registration = () => {
 
     return (
         <div>
-            <h1>Registration</h1>
+            <h1>Регистрация</h1>
             <form onSubmit={submit}>
                 <input onChange={inputHeanler} value={form.name} type='text' name='name' placeholder="username" />
                 <input onChange={inputHeanler} value={form.email} type='email' name='email' placeholder="email" />
                 <input onChange={inputHeanler} value={form.password} type='password' name='password' placeholder="password" />
-                <button type='submit'>Sing UP</button>
+                <button type='submit'>Регистрация</button>
             </form>
-            <p>If You already have an accout please <NavLink to={navigation.login}>Login</NavLink></p>
+            <p>Если у Вас есть аккаунт, пройдите по ссылке для <NavLink to={navigation.login}>Авторизации</NavLink>.</p>
         </div>
     );
 };

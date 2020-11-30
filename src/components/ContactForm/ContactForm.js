@@ -14,6 +14,7 @@ const ContactForm = () => {
     const [data, setData] = useState(initialData)
     const { name, number } = data
     const contacts = useSelector(state => state.contacts.items)
+    const token = useSelector(state => state.token)
     const dispatch = useDispatch()
 
 
@@ -34,8 +35,7 @@ const ContactForm = () => {
         if (contacts.some(contact => contact.name === singleContact.name)) {
             dispatch(alertOpen())
         } else {
-            dispatch(postContactsOperation(singleContact))
-            dispatch(getContactsOperation())
+            dispatch(postContactsOperation(singleContact, token))
             setData(initialData)
         }
     }

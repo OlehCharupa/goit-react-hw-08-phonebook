@@ -2,7 +2,7 @@ import { LOADER_ON, LOADER_OFF } from "../constants/index";
 
 const initialState = false
 
-export default (state = initialState, action) => {
+export const loader = (state = initialState, action) => {
     switch (action.type) {
         case LOADER_ON:
             return true;

@@ -1,7 +1,7 @@
 import axios from "axios"
 import { setError, resetError } from '../action/errorAction';
 import { loaderOff, loaderOn } from '../action/loaderAction';
-import { setToken } from "../action/tokenAction"
+import { setToken, resetToken } from "../action/tokenAction"
 
 export const registerOperation = (userData) => async (dispatch) => {
     try {
@@ -27,3 +27,30 @@ export const loginOperation = (userData) => async (dispatch) => {
     }
 
 }
+
+export const logOut = (token) => async (dispatch) => {
+    try {
+        dispatch(loaderOn())
+        await axios({
+            url: "https://goit-phonebook-api.herokuapp.com/users/logout",
+            method: "post",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        })
+        dispatch(resetToken())
+    } catch (error) {
+        dispatch(setError(error))
+    } finally {
+        dispatch(loaderOff())
+
+    }
+}
+
+axios({
+    url: '',
+    method: 'post',
+    headers: {
+        'content-type': 'application.json',
+    }
+})
