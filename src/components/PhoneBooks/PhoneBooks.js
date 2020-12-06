@@ -20,17 +20,17 @@ const PhoneBooks = () => {
 
     useEffect(() => {
         dispatch(getContactsOperation(token))
-        const localStorageContacts = localStorage.getItem("items")
-        const fff = JSON.parse(localStorageContacts)
-        if (localStorageContacts) {
-            dispatch(setContactLocalStorage(fff))
-        }
+        // const localStorageContacts = localStorage.getItem("items")
+        // const fff = JSON.parse(localStorageContacts)
+        // if (localStorageContacts) {
+        //     dispatch(setContactLocalStorage(fff))
+        // }
     }, [dispatch])
 
 
-    useEffect(() => {
-        localStorage.setItem("items", JSON.stringify(contacts))
-    }, [contacts])
+    // useEffect(() => {
+    //     localStorage.setItem("items", JSON.stringify(contacts))
+    // }, [contacts])
 
 
 

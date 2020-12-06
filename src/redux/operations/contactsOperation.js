@@ -2,14 +2,14 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { setError, resetError } from "../action/errorAction";
 import { loaderOn, loaderOff } from "../action/loaderAction";
-import { setContactLocalStorage, deleteContact, setContacts } from "../action/phoneBookAction";
+import { setContactLocalStorage, deleteContact, setContacts, addContact } from "../action/phoneBookAction";
 
 
-const options = {
-    header: {
-        'Contetn-Type': "application/json"
+const options = (token) => ({
+    headers: {
+        Authorization: `Bearer ${token}`
     }
-}
+})
 
 export const getContactsOperation = (token) => async (dispatch) => {
     try {
@@ -33,15 +33,9 @@ export const getContactsOperation = (token) => async (dispatch) => {
 export const postContactsOperation = (contact, token) => async (dispatch) => {
     try {
         dispatch(loaderOn())
-        const result = await axios({
-            url: 'https://goit-phonebook-api.herokuapp.com/contacts',
-            method: "post",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-            body: { ...contact },
-        })
-        // dispatch(setContacts(result.data))
+        const result = await axios.post("https://goit-phonebook-api.herokuapp.com/contacts", contact, options(token))
+        console.log(result.data);
+        dispatch(addContact(result.data))
         dispatch(getContactsOperation(token))
     } catch (error) {
         dispatch(setError("Что-то пошло не так. Попробуйте позже!"))
